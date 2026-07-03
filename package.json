@@ -13,5 +13,8 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "pdfkit": "^0.19.1"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
