@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const apiBase = window.location.origin;
   const chatWindow = document.getElementById("chatWindow");
   const chatForm = document.getElementById("chatForm");
   const chatInput = document.getElementById("chatInput");
@@ -26,11 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const thinking = addMessage("…", "bot");
 
     try {
-      const res = await h("/api/chat", {
+      const res = await fetch(`${apiBase}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text })
       });
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
       const data = await res.json();
       thinking.lastChild.textContent = data.reply;
 
@@ -48,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function animateGauge(districtId) {
     try {
-      const res = await fetch(`/api/districts/${districtId}`);
+      const res = await fetch(`${apiBase}/api/districts/${districtId}`);
       const data = await res.json();
       const pct = Math.min(100, Math.round((data.district.depthToWaterM / 20) * 100));
       depthFill.style.height = `${100 - pct}%`;

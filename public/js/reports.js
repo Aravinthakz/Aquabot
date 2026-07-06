@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  const apiBase = window.location.origin;
   const select = document.getElementById("reportDistrict");
   const btn = document.getElementById("reportBtn");
   const preview = document.getElementById("reportPreview");
@@ -7,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let statusMeta = {};
 
   try {
-    const res = await fetch("/api/districts");
+    const res = await fetch(`${apiBase}/api/districts`);
     const data = await res.json();
     districts = data.districts;
     statusMeta = data.statusMeta;
@@ -42,6 +43,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   btn.addEventListener("click", () => {
     const id = select.value;
     if (!id) return;
-    window.location.href = `/api/report/${id}`;
+    window.location.href = `${apiBase}/api/report/${id}`;
   });
 });

@@ -1,4 +1,5 @@
 (function () {
+  const apiBase = window.location.origin;
   let leafletMap = null;
   let initialized = false;
 
@@ -6,7 +7,7 @@
     if (initialized) return;
     initialized = true;
 
-    const res = await fetch("/api/districts");
+    const res = await fetch(`${apiBase}/api/districts`);
     const { districts, statusMeta } = await res.json();
 
     leafletMap = L.map("map", { scrollWheelZoom: false }).setView([11.0, 78.4], 7);
